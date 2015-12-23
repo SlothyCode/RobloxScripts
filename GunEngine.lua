@@ -84,3 +84,5 @@ local WeaponEngine = {
 	}
 	
 }
+
+return WeaponEngine
