@@ -1,5 +1,7 @@
 -- Work in progress
 
+local RepStorage = game:GetService("ReplicatedStorage") 
+
 local WeaponEngine = {
 	
 	BaseGunClass = {
@@ -14,7 +16,16 @@ local WeaponEngine = {
 			
 		end,
 		
-		OnFire = function(self, start, fin)
+		OnFire = function(self, start, fin, plr, gun)
+			
+			local dir = (fin-start).magnitude
+			local ray = Ray.new(start, dir)
+			
+			local bullet = RepStorage:FindFirstChild(gun.Name .. "Bullet"):Clone()
+			local bv = Instance.new("BodyVelocity", bullet)
+			
+			bullet.CFrame = CFrame.new(start)
+			bv.Velocity = dir.unit * -999	
 			
 		end,
 		
@@ -28,7 +39,7 @@ local WeaponEngine = {
 		
 		OnUnEquip = WeaponEngine.BaseGunClass.OnUnEquip,
 		
-		OnFire = WeaponEngine.BaseGunClass.OnUnEquip
+		OnFire = WeaponEngine.BaseGunClass.OnFire
 	},
 	
 	BurstGunClass = {
@@ -81,8 +92,6 @@ local WeaponEngine = {
 		OnFire = function(self)
 			
 		end
-	}
+	},
 	
 }
-
-return WeaponEngine
