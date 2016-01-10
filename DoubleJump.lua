@@ -1,28 +1,34 @@
-local Player = game.Players.LocalPlayer
-local Char = Player.Character or Player.CharacterAdded:wait()
-local UserInput = game:GetService("UserInputService")
-local isJumping = false
-local isSecondJumping = false
-local JumpPower = 40
+---------- >>  FrigidSloth  << ----------
 
-UserInput.InputBegan:connect(function(inputObj)
-	if inputObj.UserInputState == Enum.UserInputState.Begin and inputObj.KeyCode == Enum.KeyCode.Space then
+script.Name = "main.double_jump";
+
+--------- >> Initialisation << ----------
+
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+local Character = Player.CharacterAdded:wait() or Player.Character
+local Mouse = Player:GetMouse()
+local isJumping = false
+local isDoubleJumping = false
+
+local Jump = Mouse.KeyDown:connect(function(key)
+	key = key:lower()
+	if key == string.char(32) then
+		local t = tick()
 		isJumping = true
-		local init = tick()
-		local secondJump = UserInput.InputBegan:connect(function(iObj2)
-			if inputObj.UserInputState == Enum.UserInputState.Begin and inputObj.KeyCode == Enum.KeyCode.Space and tick() - init <= 0.55 and not isSecondJumping then				
-				isSecondJumping = true
-				for i, bodyPart in next, Char:GetChildren() do
-					if bodyPart:IsA("BasePart") then
-						print(bodyPart.Name, "     ", bodyPart:GetMass() * JumpPower)
-						bodyPart.Velocity = Vector3.new(0, JumpPower * bodyPart:GetMass(), 0)
-						wait()
-						bodyPart.Velocity = Vector3.new(0, 0, 0)
-					end
-				end
-				repeat wait() until not Char:WaitForChild("Humanoid").Jump
-				isSecondJumping = false
+		local DoubleJump = Mouse.KeyDown:connect(function(k)
+			if (tick()-t <= 0.8) and (k == string.char(32)) and isJumping and not isDoubleJumping then
+				local Torso = Character:WaitForChild("Torso")
+				Torso.Velocity = Vector3.new(0, 100, 0)
+				isDoubleJumping = true
+				wait(1)
 				isJumping = false
+				isDoubleJumping = false
+			end
+		end)
+		Mouse.KeyDown:connect(function(ki)
+			if ki:lower() == "q" then
+				
 			end
 		end)
 	end
