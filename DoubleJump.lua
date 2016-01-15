@@ -1,7 +1,5 @@
----------- >>  SpinalCode  << ----------
-
+---------- >>  FrigidSloth  << ----------
 script.Name = "main.jump";
-
 --------- >> Initialisation << ----------
 
 local Players = game:GetService("Players")
