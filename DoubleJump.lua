@@ -12,11 +12,11 @@ local isDoubleJumping = false
 
 local Jump = Mouse.KeyDown:connect(function(key)
 	key = key:lower()
-	if key == string.char(32) then
+	if string.byte(key) == 32 then
 		local t = tick()
 		isJumping = true
 		local DoubleJump = Mouse.KeyDown:connect(function(k)
-			if (tick()-t <= 0.8) and (k == string.char(32)) and isJumping and not isDoubleJumping then
+			if (tick()-t <= 0.8) and (string.byte(key) == 32) and isJumping and not isDoubleJumping then
 				Torso.Velocity = Vector3.new(0, 100, 0)
 				isDoubleJumping = true
 				wait(1)
