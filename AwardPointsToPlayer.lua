@@ -28,9 +28,10 @@ game.Players.PlayerAdded:connect(function(player)
 	local ls = Instance.new("IntValue", player)
 	ls.Name = "leaderstats"
 	
-	local poi = Instance.new("IntValue", ls)
+	local poi = Instance.new("IntValue")
 	poi.Value = GetData(player.UserId) or 0
 	poi.Name = "Points"
+	poi.Parent = ls
 	
 	player.Chatted:connect(function(msg)
     		if msg:sub(1, 6) == ":award" then
@@ -44,16 +45,16 @@ game.Players.PlayerAdded:connect(function(player)
       			end
       			
 			local string = msg:sub(start, -1)
-			local player = GetPlayerByPattern(string:match("^%S+"))
+			local plr = GetPlayerByPattern(string:match("^%S+"))
 			local numPoints = string:match("%d+$")
-			local plrPoints = player:FindFirstChild("leaderstats"):FindFirstChild("Points").Value
+			local plrPoints = plr:FindFirstChild("leaderstats"):FindFirstChild("Points").Value
 			
 			if negate then 
 				numPoints = -(numPoints) 
 			end
 			
 			plrPoints = plrPoints + numPoints
-			SaveData(player.UserId, plrPoints)
+			SaveData(plr.UserId, plrPoints)
 		end
 	 end)
 	
