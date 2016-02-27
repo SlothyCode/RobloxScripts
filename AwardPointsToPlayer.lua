@@ -46,9 +46,11 @@ game.Players.PlayerAdded:connect(function(player)
       			
 			local string = msg:sub(start, -1)
 			local plr = GetPlayerByPattern(string:match("^%S+"))
+			print( (plr~=nil and plr.Name) )
 			local numPoints = string:match("%d+$")
+			print( (numPoints~=nil and numPoints) )
 			local plrPoints = plr:FindFirstChild("leaderstats"):FindFirstChild("Points").Value
-			
+			print( (plrPoints~=nil and plrPoints) )
 			if negate then 
 				numPoints = -(numPoints) 
 			end
